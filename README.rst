@@ -3,18 +3,18 @@ ImgDownloader
 
 A package for downloading images.
 
-ImgDownloader requires Python 3.4 or newer, responses 0.9.0 or newer and requests 2.19.1 or newer.
+ImgDownloader requires Python 3.4 or newer, ``responses`` 0.9.0 or newer and ``requests`` 2.19.1 or newer.
 
 
 Installing
 ----------
 All external packages and its versions are listed in ``requirements.txt`` and can be installed with pip:
 
-    ``pip install -r requirements.txt``
+``pip install -r requirements.txt``
 
 To install ``ImgDownloader`` itself please execute:
 
-    ``python setup.py install``
+``python setup.py install``
 
 Basics
 ------
