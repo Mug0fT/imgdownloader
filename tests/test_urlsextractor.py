@@ -16,8 +16,6 @@ lines_in_file = [urls_in_file[0] + '\n',
                 '\r' + urls_in_file[2] + '\n\n']
 
 n_invalid_lines = 3  # pleas make sure that this number is always synchronized with lines_in_file @TDOO can be better done
-n_jpg_urls = 1 # pleas make sure that this number is always synchronized with lines_in_file @TDOO can be done better
-n_png_urls = 1 # pleas make sure that this number is always synchronized with lines_in_file @TDOO can be done better
 
 def delete_file(file_path):
     # try to remove the fileif exists
