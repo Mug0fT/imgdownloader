@@ -9,4 +9,5 @@ setup(name='ImgDownloader',
       author_email='mugoft.blog@gmail.com',
       url='https://github.com/Mug0fT/imgdownloader',
       license='Creative Commons Attribution-Noncommercial-Share Alike license',
+      packages=['imgdownloader']
      )
