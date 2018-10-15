@@ -87,7 +87,6 @@ You can also wait until all download tasks are finished, and be notified after e
 
     from imgdownloader.imgdownloader import *
     from imgdownloader.urlsextractor import *
-    import time
 
     def log(err_text):
         print(err_text)
