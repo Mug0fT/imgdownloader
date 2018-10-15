@@ -154,12 +154,6 @@ class ImgDownloader:
         :return: updated img_item
         """
         img_item.is_sent_to_obsrvr = False  # reset flag as after each download we should notify observer again
-        if (img_item.name is not None) and do_rewrite:
-            # in case we are restarting download - rewrite already existing image
-            pass
-        else:
-            # update name of the image
-            self._update_img_name(img_item, do_rewrite)
 
         # start downloading
         fail_cnt = 0
@@ -266,6 +260,14 @@ class ImgDownloader:
         :param do_rewrite: Flag which identifies whether
         """
         img_item.is_user_cancelled = False
+
+        if (img_item.name is not None) and do_rewrite:
+            # in case we are restarting download - rewrite already existing image
+            pass
+        else:
+            # update name of the image
+            self._update_img_name(img_item, do_rewrite)
+
         future = self._tpool.submit(self._download_img, img_item, do_rewrite)
         self._dwnlds[img_item.url] = (img_item, future)
 
