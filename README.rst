@@ -31,7 +31,7 @@ This package allows to download images from internet.
     # extract image urls from the file
     urls = get_urls("img_urls.txt", logger_func=log)
 
-    dwnldr = ImgDownloader(threads_max=2)
+    dwnldr = ImgDownloader()
 
     # start downloading
     dwnldr.download("./output", False, *urls)

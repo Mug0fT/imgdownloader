@@ -4,13 +4,13 @@ from urllib.parse import urlparse
 def get_urls(file_path, logger_func=None):
     """
     Reads the specified file and returns found URLs. Each line in the file has to contain only one URL.
-    All spaces are ignored. In case of empty on invalid line logger_func will be called with the information
-    about invalid line number.
-    In case file_path is invalid or file can't be open, exception will be raised. Please see @os.open for
+    All spaces are ignored. In case of empty on invalid line logger_func will be called with the error text which also
+    contains the information about invalid line number.
+    In case file_path is invalid or file can't be open, exception will be raised. Please see :func:`.os.open` for
     description of possible exceptions.
 
     :param file_path: path to the file with URLs
-    :param logger_func: callback function which will be called in case URLs is not found in the line. The string
+    :param logger_func: callback function which will be called each time when URL is not found in the line. The string
     with error information and line number is passed to this function.
     :type logger_func: callbackFunction(error_text)
     :return: list of extracted URLs

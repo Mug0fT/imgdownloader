@@ -18,7 +18,7 @@ class ImgDownloadState(Enum):
     CANCELLED = 2,
     """ download is cancelled """
     CANCELLED_ERROR = 3,
-    """ download is cancelled because of error """
+    """ download is cancelled because of the error """
     FINISHED = 4,
     """ download is finished """
 
@@ -39,8 +39,8 @@ Information about the downloading image
 
 :param url: url of the image
 :param path: path path to the image
-:param state: current download stat of the image. Please see @ImgDownloadState
-:param exception: exception which occurred downloading, or None in case nothing happened
+:param state: current download state of the image. Please see :class:`ImgDownloadState`
+:param exception: exception which occurred during downloading, or None in case nothing happened
 """
 
 
@@ -96,11 +96,11 @@ class ImgDownloader:
         different download operations (e.g. download, cancel, remove, restart operations). It also allows a caller to
         follow the download process by acquiring the information about downloading images in real time.
         Each download task is run in the separate thread, therefore download process doesn't block the caller
-        (until @wait_until_downloaded method is called).
+        (until :func:`wait_until_downloaded` is called).
         Download process is fault tolerant: in case of lost connection or some other errors it
         retries to continue downloading several times and after that starts another download task.
 
-        :param threads_max: maximum number of threads which can run and execute download tasks at the same time.
+        :param threads_max: maximum number of threads which can run and execute download tasks in parallel.
         """
         if threads_max <= 0:
             raise ValueError("threads_max has to be greater than 0")
@@ -115,7 +115,7 @@ class ImgDownloader:
         """
         Extract the name of the image from URL, and assign to the passed img_item.
 
-        :param img_item: _ImgItem object containing information about the downloading image.
+        :param img_item: :class:`_ImgItem` object containing information about the downloading image.
         :param do_rewrite: if False then unique name will be given to the img_item.
         """
 
@@ -146,12 +146,12 @@ class ImgDownloader:
     def _download_img(self, img_item, do_rewrite):
         """
         Download the image from internet based on the passed URL. This function is executed in the separate thread.
-        See download_img description for additional details.
+        See :func:`download" function description for additional details.
 
-        :param img_item: _img_item object with the information used for downloading (e.g. url, output directory)
+        :param img_item: :class:`_ImgItem` object with the information used for downloading (e.g. url, output directory)
         :param do_rewrite: in case True and image with the downloading name already exists in the output directory,
-        the existing image will be owerwritten with the downloading image.
-        :return: img_item
+        the existing image will be overwritten with the downloading image.
+        :return: updated img_item
         """
         img_item.is_sent_to_obsrvr = False  # reset flag as after each download we should notify observer again
         if (img_item.name is not None) and do_rewrite:
@@ -203,14 +203,12 @@ class ImgDownloader:
 
     def _get_download_state(self, img_item, future):
         """
-        Return ImgDownloadingState based on the state of img_item and future objects.
-        See get_download_state method fot detailed description.
+        Return :class:`ImgDownloadingState` based on the state of img_item and future objects.
+        See :func:`get_download_state` method fot detailed description.
 
-        :param img_item: _ImgItem object which is used to identify current download state of the image URL
-        stored inside this object
-        :param future: Future object which is used to identify current download state of the image URL
-        stored inside img_item
-        :return: ImgDownloadingState object related to the downloading image from URL specified inside img_item
+        :param img_item: :class:`_ImgItem` object which is used to identify current download state of the image.
+        :param future: Future object which is used to identify current download state of the download task.
+        :return: :class:`ImgDownloadingState` object related to the downloading image from URL specified inside img_item.
         """
         state = ImgDownloadState.PENDING
         if future.cancelled():
@@ -234,11 +232,11 @@ class ImgDownloader:
 
     def _get_download_info(self, img_item, future):
         """
-        See get_download_info method description.
+        See :func:`get_download_info` method description.
 
-        :param img_item: _ImgItem object containing infromation about the download task
-        :param future: Future object containing information about the current download state
-        :return: ImgDownloadInfo object
+        :param img_item: :class:`_ImgItem` object containing information about the downloading image.
+        :param future: Future object containing information about the state of the current download state.
+        :return: :class:`ImgDownloadInfo` object.
         """
 
         state = self._get_download_state(img_item, future)
@@ -247,9 +245,9 @@ class ImgDownloader:
 
     def _cancel(self, img_item, future):
         """
-        See description of the cancel method
+        See description of the :func:`cancel` method
 
-        :param img_item: _ImgItem object containing infromation about the download task to cancel
+        :param img_item: :class:`_ImgItem` object containing information about the download task to cancel
         :param future: Future object containing information about the download task thread to cancel
         """
 
@@ -263,7 +261,7 @@ class ImgDownloader:
         """
         Add new thread for executing download task into the thread pool.
 
-        :param img_item: _ImgItem object containing infromation about the image to download
+        :param img_item: :class:`_ImgItem` object containing information about the image to submit
         :param do_rewrite: Flag which identifies whether
         """
         img_item.is_user_cancelled = False
@@ -296,15 +294,15 @@ class ImgDownloader:
         Download images from internet based on the specified URLs and store them into the specified directory.
         Each download task is executed in separate thread.
         If download task with the specified URL already exists - download will not be started.
-        If you want to add another download task with the already existing url, you first must @remove the download task
-        or use @restart method.
+        If you want to add another download task with the already existing url, you first must :func:`remove`
+        the download task or use :func:`restart` method.
         After this method is called for each url one download task is created. You can follow each download task
-        by acquiring ImgDownloadInfo object via calling @get_download_info method.
-        If you want to wait until all download threads are done, please call wait_until_downloaded method.
+        by acquiring :class:`ImgDownloadInfo` object via calling :func:`get_download_info` method.
+        If you want to wait until all download threads are done, please call :func:`wait_until_downloaded` method.
 
         :param dir_out: directory for storing downloaded images
         :param do_rewrite: in case True and image with the downloading name already exists in the output directory,
-        the existing image will be owerwritten with the downloading image. Otherwise the downloading image
+        the existing image will be overwritten with the downloading image. Otherwise the downloading image
         will be saved under another name.
         :param urls: URLs to the images to download
         """
@@ -321,7 +319,8 @@ class ImgDownloader:
     def wait_until_downloaded(self, done_callback=None):
         """
         Wait until all download tasks are completed. In case callback function is provided by the observer,
-        observer will be notified about each completed download task (in case this task was not sent already before).
+        the callback function is called each time when one download task is completed (in case the information
+        about this task was not sent already before).
         After the execution of this function is finished, all existing download tasks are marked as "sent to observer".
         It means that with the next call of this function, the observer will not be notified with the information
         about these download tasks. The information about already completed and not yet sent download tasks is sent
@@ -329,8 +328,8 @@ class ImgDownloader:
 
         :param done_callback: callback function which will be called every time
         after the information about completed and not yet sent download task is available.
-        The callback is called with a single argument - the ImgDownloadInfo object
-        :type done_callback: callbackFunction(ImgDownloadInfo)
+        The callback is called with a single argument - :class:`ImgDownloadInfo` object
+        :type done_callback: callbackFunction(:class:`ImgDownloadInfo`)
         """
         futures = [future for (img_item, future) in self._dwnlds.values()]
         for f_complete in concurrent.futures.as_completed(futures):
@@ -338,6 +337,7 @@ class ImgDownloader:
             try:
                 img_item = f_complete.result()
             except Exception as e:
+                " Exception can occur only in case future object was cancelled in meantime "
                 """ map future to img_item. We expect that exception is rare 
                 case and therefore it is ok to perform linear search """
                 img_items = [img_item for (img_item, f) in self._dwnlds.values() if f == f_complete]
@@ -356,7 +356,7 @@ class ImgDownloader:
         """
         Cancels and removes existing download tasks based on the specified urls.
 
-        :param url: URLs used to find download tasks to remove
+        :param urls: URLs used to find download tasks to remove
         """
         for url in urls:
             dwnld = self._dwnlds.pop(url, None)
@@ -377,8 +377,8 @@ class ImgDownloader:
 
     def restart(self, *urls):
         """
-        Restarts already existing download tasks. Already running download tasks will be cancelled,
-        and then started again.
+        Restarts already existing download tasks based on the specified URLs. Already running download tasks
+        will be cancelled and then started again.
 
         :param urls: URLs used to find download tasks to restart.
         """
@@ -398,10 +398,10 @@ class ImgDownloader:
 
     def get_download_info(self, url):
         """
-        Get download info about download task based on the specified url.
+        Get download info about download task based on the specified URL.
 
         :param url: URL used to find download task.
-        :return: @ImgDownloadInfo object for the specified URL
+        :return: :class:`ImgDownloadInfo` object for the specified URL
         """
         dwnld_info = None
         if url in self._dwnlds:
@@ -415,7 +415,7 @@ class ImgDownloader:
         Return download state of the download task based on the specified URL.
 
         :param url: URL used to find download task.
-        :return: download state of the download task based on the specified URL.
+        :return: :class:`ImgDownloadState` object of the download task based on the specified URL.
         """
         state = None
         if url in self._dwnlds:
@@ -426,10 +426,11 @@ class ImgDownloader:
 
     def get_download_infos_by_state(self, *states):
         """
-        Return ImgDownloadInfo objects related to the download tasks with the specified download states.
+        Return :class:`ImgDownloadInfo` objects related to the download tasks with the specified download states.
 
-        :param states: download states used for searching the desired download tasks.
-        :return: list of the ImgDownloadInfo objects related to the download tasks with the specified download states.
+        :param states: :class:`ImgDownloadState` state objects used for searching the desired download tasks.
+        :return: list of the :class:`ImgDownloadInfo` objects related to the download tasks with the
+        specified download states.
         """
         for state in states:
             if not ImgDownloadState.has_item(state):
