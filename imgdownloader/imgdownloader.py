@@ -337,7 +337,7 @@ class ImgDownloader:
             try:
                 img_item = f_complete.result()
             except Exception as e:
-                " Exception can occur only in case future object was cancelled in meantime "
+                """ Exception can occur only in case future object was cancelled in meantime """
                 """ map future to img_item. We expect that exception is rare 
                 case and therefore it is ok to perform linear search """
                 img_items = [img_item for (img_item, f) in self._dwnlds.values() if f == f_complete]
