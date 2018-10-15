@@ -16,7 +16,7 @@ To install ``ImgDownloader`` itself please execute:
 
 ``python setup.py install``
 
-Basics
+Usage guide
 ------
 This package allows to download images from internet.
 
