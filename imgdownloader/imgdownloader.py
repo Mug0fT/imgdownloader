@@ -251,11 +251,12 @@ class ImgDownloader:
         :param future: Future object containing information about the download task thread to cancel
         """
 
-        # try to cancel a future (it will work only if future is not in the running state)
-        future.cancel()
         # change img_item state to cancelled by user state - it will cancel the running futures
         img_item.is_user_cancelled = True
-        future.result()
+        # try to cancel a future (it will work only if future is not in the running state)
+        if not future.cancel():
+            # wait until future finishes its task
+            future.result()
 
     def _submit(self, img_item, do_rewrite):
         """
