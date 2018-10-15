@@ -16,7 +16,7 @@ To install ``ImgDownloader`` itself please execute:
 
 ``python setup.py install``
 
-Basics
+Usage guide
 ------
 This package allows to download images from internet.
 
@@ -88,14 +88,13 @@ You can also wait until all download tasks are finished, and be notified after e
     from imgdownloader.imgdownloader import *
     from imgdownloader.urlsextractor import *
 
-    import time
+    def log(err_text):
+        print(err_text)
 
-    urls = ["https://habrastorage.org/webt/y0/nc/6i//y0nc6ianhueuc3tqnwkn5qbl0h4.jpeg",
-            "https://habrastorage.org/webt/54/1e/jo/541ejotttsu8hl3swtihly-liro.png",
-            "some_wrong_url.png"]
+    # extract image urls from the file
+    urls = get_urls("img_urls.txt", logger_func=log)
 
-    dwnldr = ImgDownloader(threads_max=2)
-
+    dwnldr = ImgDownloader(threads_max=8)
 
     # start downloading
     dwnldr.download("./output", False, *urls)
@@ -108,10 +107,12 @@ You can also wait until all download tasks are finished, and be notified after e
     # wait untill everything is downloaded
     dwnldr.wait_until_downloaded(dwnld_completed)
 
-
+The download process is fault tolerant: in case of lost connection or some other errors it
+retries to continue downloading several times and after that starts another download task.
 
 Running tests
 ------
+To run unit tests please go to the root folder of the package and execute:
 
 ``python -m unittest discover -v``
 
