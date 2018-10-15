@@ -87,15 +87,15 @@ You can also wait until all download tasks are finished, and be notified after e
 
     from imgdownloader.imgdownloader import *
     from imgdownloader.urlsextractor import *
-
     import time
 
-    urls = ["https://habrastorage.org/webt/y0/nc/6i//y0nc6ianhueuc3tqnwkn5qbl0h4.jpeg",
-            "https://habrastorage.org/webt/54/1e/jo/541ejotttsu8hl3swtihly-liro.png",
-            "some_wrong_url.png"]
+    def log(err_text):
+        print(err_text)
 
-    dwnldr = ImgDownloader(threads_max=2)
+    # extract image urls from the file
+    urls = get_urls("img_urls.txt", logger_func=log)
 
+    dwnldr = ImgDownloader(threads_max=8)
 
     # start downloading
     dwnldr.download("./output", False, *urls)
