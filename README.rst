@@ -107,10 +107,12 @@ You can also wait until all download tasks are finished, and be notified after e
     # wait untill everything is downloaded
     dwnldr.wait_until_downloaded(dwnld_completed)
 
-
+The download process is fault tolerant: in case of lost connection or some other errors it
+retries to continue downloading several times and after that starts another download task.
 
 Running tests
 ------
+To run unit tests please go to the root folder of the package and execute:
 
 ``python -m unittest discover -v``
 
