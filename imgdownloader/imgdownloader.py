@@ -57,8 +57,11 @@ class ImgDownloader:
             self.dir_out = dir_out
 
             # make sure that the passed output directory has correct ending
-            if self.dir_out[-1] != '/':
-                self.dir_out += '/'
+            if len(self.dir_out) > 1:
+                if self.dir_out[-1] != '/':
+                    self.dir_out += '/'
+            else:
+                self.dir_out += './'
 
             self.name = None  # name of the image
             self.exception = None  # stores exception occured during downloading
@@ -131,8 +134,12 @@ class ImgDownloader:
 
         if not os.path.exists(img_item.dir_out):
             # create output directory as it doesn't exist
-            os.makedirs(img_item.dir_out)
-            # if no directory exists, we can be sure, that file with the specified name also doesn't exist there
+            try:
+                os.makedirs(img_item.dir_out)
+            except OSError as e:
+                # some error during creating the directory
+                pass
+        # if no directory exists, we can be sure, that file with the specified name also doesn't exist there
         elif not do_rewrite:
             # in case image with the specified name already exists in output folder - add unique postfix to the name
             n = 1
@@ -158,6 +165,7 @@ class ImgDownloader:
         # start downloading
         fail_cnt = 0
         is_downloading = True
+
         while is_downloading:
             try:
                 """try to retrieve the image as a stream (without storing everything in the memory, 

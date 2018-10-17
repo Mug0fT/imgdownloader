@@ -19,6 +19,8 @@ To install ``ImgDownloader`` itself please execute:
 Usage guide
 ------
 This package allows to download images from internet.
+You can specify URLs in the file, where each line contains one URL to the image, and then use ``get_urls`` method
+to extract all URLs from the file.
 
 ..  code-block:: python
 
@@ -116,3 +118,8 @@ To run unit tests please go to the root folder of the package and execute:
 
 ``python -m unittest discover -v``
 
+Runnin example
+------
+To see how package works you can run example script ``run_example.py``. After running this script you will be asked
+for the path to the file with URLs, and fo the path to the output directory. After all paths are given, image
+downloading will be started.
