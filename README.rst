@@ -121,5 +121,5 @@ To run unit tests please go to the root folder of the package and execute:
 Runnin example
 ------
 To see how package works you can run example script ``run_example.py``. After running this script you will be asked
-for the path to the file with URLs, and fo the path to the output directory. After all paths are given, image
+for the path to the file with URLs, and for the path to the output directory. After all paths are given, image
 downloading will be started.
