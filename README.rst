@@ -41,7 +41,7 @@ to extract all URLs from the file.
     # wait untill everything is downloaded
     dwnldr.wait_until_downloaded()
 
-``ImgDownloader`` provides various methods for performing different download operations (e.g. download, cancel, remove,
+``ImgDownloader`` provides various methods for performing various download operations (e.g. download, cancel, remove,
 restart operations). Each download task is run in the separate thread, therefore download process doesn't block the caller
 (until ``wait_until_downloaded`` method is called).
 
@@ -118,8 +118,8 @@ To run unit tests please go to the root folder of the package and execute:
 
 ``python -m unittest discover -v``
 
-Runnin example
+Running example
 ------
 To see how package works you can run example script ``run_example.py``. After running this script you will be asked
 for the path to the file with URLs, and for the path to the output directory. After all paths are given, image
-downloading will be started.
+downloading is started.
